@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produits par Marque</title>
+    <link rel="stylesheet" type="text/css" href="Coca.css">
+
+</head>
+<body>
+    <h1>Produits par Marque</h1>
+
+    <!-- Liens pour afficher tous les produits et par marque -->
+    <p>
+        <a href="produits.html">Afficher tous les produits</a> |
+        <a href="marque.html">Afficher par marque</a>
+    </p>
+
+    <div id="listeProduitsMarque">
+        <!-- La liste des produits par marque sera ajoutée ici en JavaScript -->
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const listeProduitsMarque = document.getElementById('listeProduitsMarque');
+            const marque = 'Coca-Cola'; 
+
+            fetch(`/api/produits/${marque}`)
+                .then(response => response.json())
+                .then(data => {
+
+                    listeProduitsMarque.innerHTML = '';
+
+
+                    data.forEach(produit => {
+                        const div = document.createElement('div');
+                        div.className = 'produit';
+                        div.innerHTML = `
+                            <h2>${produit.nom}</h2>
+                            <p>${produit.marque}</p>
+                        `;
+                        listeProduitsMarque.appendChild(div);
+                    });
+                })
+                .catch(error => {
+                    console.error('Une erreur s\'est produite lors du chargement des produits par marque :', error);
+                });
+        });
+    </script>
+</body>
+</html>

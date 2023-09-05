@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marques de Produits</title>
+    <link rel="stylesheet" type="text/css" href="Coca.css">
+</head>
+<body>
+    <h1>Voici tous les produits produits</h1>
+    <p>
+        <a href="Produits.html">Afficher tous les produits</a> |
+        <a href="marque.html">Afficher par marque</a>
+    </p>
+
+    <div id="listeMarques">
+        Fanta, Coca-Cola, Sprite.
+    ];
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const listeMarques = document.getElementById('listeMarques');
+
+            fetch('/api/marques') 
+                .then(response => response.json())
+                .then(data => {
+                    listeMarques.innerHTML = '';
+
+                    data.forEach(marque => {
+                        const div = document.createElement('div');
+                        div.textContent = marque;
+                        listeMarques.appendChild(div);
+                    });
+                })
+                .catch(error => {
+                    console.error('Une erreur s\'est produite lors du chargement des marques :', error);
+                });
+        });
+    </script>
+</body>
+</html>
